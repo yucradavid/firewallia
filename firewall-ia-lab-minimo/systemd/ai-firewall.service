@@ -1,0 +1,18 @@
+[Unit]
+Description=AI Firewall Engine
+After=network.target nftables.service
+Requires=nftables.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/ai_firewall
+ExecStart=/home/david/firewall-ia-lab/.venv/bin/python /opt/ai_firewall/ai_firewall.py --iface enp0s8 --window 10
+Restart=on-failure
+RestartSec=5
+User=root
+Environment=PYTHONUNBUFFERED=1
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
